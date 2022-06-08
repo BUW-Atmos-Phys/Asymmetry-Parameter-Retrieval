@@ -2,6 +2,7 @@
 % size_s ---- particle size ----- 
 %  g ---- asymmetry factor  ---- 
 %  Cp ---- complexity ----- 
+%  C0 ---- integral of geometrical optics phase function ----- 
 
 function [g, Cp, C0] =asymmetryfactor_complexity(scain_s, size_s)
 
