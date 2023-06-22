@@ -4,7 +4,7 @@ function [DATA_out] = PHIPS_g_script(PhipsData, Ng, sizelimit, campaign)
 %           Ng         ->  Number of particles per group
 %           sizelimit  ->  Lower size limit, e.g. 15 micron
 %           campaign   ->  Name of the campaign
-% Note:     set Ng = 1 if using one averaged ASF
+% Note:     set Ng = [] if using one averaged ASF
 addpath('/Users/emma/Documents/m-codes/PHIPS analysis/AsymmetryFactorAnalysis/src/chebfun-master');
 
 
@@ -14,23 +14,16 @@ if strcmp(campaign,'ACLOUD') || strcmp(campaign,'SOCRATES')
     % from 18 to 42°
     Cm = [1.0313    0.9715    1.3200    1.0924    2.0480    1.3183    1.8443];
     Cs = [0.2656    0.1490    0.2057    0.1718    0.4587    0.3283    0.4339]; 
-elseif strcmp(campaign,'CIRRUS-HL')
+elseif strcmp(campaign,'CIRRUS-HL') || strcmp(campaign,'CIRRUSHL')
     % Glass bead calibration results performed during the campaign
     % from 18 to 66°
     Cm = [1.0728    1.0172    1.1056    0.9978    1.0903    1.1346    0.9436    1    1.1575];
     Cs = [0.1185    0.0942    0.1032    0.0965    0.0893    0.0897    0.1429    0    0.1108]; 
 elseif strcmp(campaign,'IMPACTS2022')
-    %a = [1.107	1.370	0.98	1.037];
-    %a_std = [0.046	0.083	0.014	0.128]; 
-    % from 18 to 42°
-    disp('Channel correction factors not final!')
-    f_mirror = load('/Users/emma/Documents/PHIPS/PHIPS-HALO/Characterization/Pigtail/pigtail_mirror_fiber_coupling_test_correction_factors_220925.txt');
-    f_pmt = load('/Users/emma/Documents/PHIPS/PHIPS-HALO/Characterization/MAPMT Crosstalk/pigtail_pmt_crosstalk_220923_gain75_angle.txt');
-    f_pmt2 = load('/Users/emma/Documents/PHIPS/PHIPS-HALO/Characterization/MAPMT Crosstalk/pigtail_pmt_crosstalk_220926_gain75_angle.txt');
-    f_pmt3 = load('/Users/emma/Documents/PHIPS/PHIPS-HALO/Characterization/MAPMT Crosstalk/pigtail_pmt_crosstalk_220928_gain75_angle.txt');
-    f_pmt4 = load('/Users/emma/Documents/PHIPS/PHIPS-HALO/Characterization/MAPMT Crosstalk/pigtail_pmt_crosstalk_220929_gain75_angle.txt');
-    Cm = f_mirror.*f_pmt;
-    Cs = std([f_pmt; f_pmt2; f_pmt3; f_pmt4]);
+    % Glass bead calibration results performed during the campaign
+    % from 18 to 82°
+    Cm = [1.1648	1.3848	  0.9816	1.186	  1.0968  	1.0728 	1.1630	1.3757	 1.092];
+    Cs = [0.1759	0.1674    0.0928	0.206     0.1456	0.1147	0.1422	0.3473   0.1737]; 
 elseif strcmp(campaign,'IMPACTS2023') % CHANGE THESE!
     % from 18 to 42°
     disp('Channel correction factors not defined!')
@@ -116,8 +109,13 @@ Nsignals = length(scain_s);
 disp(['Altogether ',num2str(length(time_s)),' ice crystals were included into g analysis.'])
 
 
-%% prepare the group average  
-Ngroup = idivide(int64(Nsignals),int64(Ng));
+%% prepare the group average 
+if isempty(Ng) % only one g,Cp retrieval
+    Ngroup = 1;
+    Ng = Nsignals;
+else
+    Ngroup = idivide(int64(Nsignals),int64(Ng));
+end
 remd = mod(Nsignals,Ng);
 g_group = zeros(Ngroup,1);
 C_group = g_group;
