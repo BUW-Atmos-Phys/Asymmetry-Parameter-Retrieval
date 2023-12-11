@@ -14,8 +14,10 @@ if strcmp(campaign,'ACLOUD') || strcmp(campaign,'SOCRATES')
     % from 18 to 42°
     Cm = [1.0313    0.9715    1.3200    1.0924    2.0480    1.3183    1.8443];
     Cs = [0.2656    0.1490    0.2057    0.1718    0.4587    0.3283    0.4339]; 
-elseif strcmp(campaign,'CIRRUS-HL') || strcmp(campaign,'CIRRUSHL')
-    % Glass bead calibration results performed during the campaign
+elseif strcmp(campaign,'CIRRUS-HL') 
+    % Glass bead calibration results performed during the campaign 
+    % 20 micron beads
+    % updated on 11.12.2023
     % from 18 to 66°
     Cm = [1.1063    1.0193    1.1393    0.8893    1.0960    1.1980    0.9004    1.2413    0.9476    0.9638];
     Cs = [0.1161    0.0901    0.1345    0.0894    0.1266    0.1623    0.1178    0.2849    0.1324    0.1434]; 
