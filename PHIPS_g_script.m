@@ -24,8 +24,9 @@ elseif strcmp(campaign,'CIRRUS-HL')
 elseif strcmp(campaign,'IMPACTS2022')
     % Glass bead calibration results performed during the campaign
     % from 18 to 82°
-    Cm = [1.1648	1.3848	  0.9816	1.186	  1.0968  	1.0728 	1.1630	1.3757	 1.092];
-    Cs = [0.1759	0.1674    0.0928	0.206     0.1456	0.1147	0.1422	0.3473   0.1737]; 
+    % updated on 12.12.2023
+    Cm = [1.0363    1.2316    0.8692    1.0445     0.9543   0.9249  0.9825  1.1466	 0.8989];
+    Cs = [0.0966    0.0775    0.0571    0.1470     0.0834   0.1011  0.0734  0.2365   0.1772]; 
 elseif strcmp(campaign,'IMPACTS2023') % CHANGE THESE!
     % from 18 to 42°
     disp('Channel correction factors not defined!')
