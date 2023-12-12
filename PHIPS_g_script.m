@@ -17,10 +17,10 @@ if strcmp(campaign,'ACLOUD') || strcmp(campaign,'SOCRATES')
 elseif strcmp(campaign,'CIRRUS-HL') 
     % Glass bead calibration results performed during the campaign 
     % 20 micron beads
-    % updated on 11.12.2023
-    % from 18 to 66°
-    Cm = [1.1063    1.0193    1.1393    0.8893    1.0960    1.1980    0.9004    1.2413    0.9476    0.9638];
-    Cs = [0.1161    0.0901    0.1345    0.0894    0.1266    0.1623    0.1178    0.2849    0.1324    0.1434]; 
+    % updated on 12.12.2023
+    % from 18 to 90°
+    Cm = [1.0653    0.9818    1.0958    0.8572    1.0563    1.1539    0.8668    1.1943    0.9121    0.9334];
+    Cs = [0.0678    0.0348    0.0747    0.0734    0.0978    0.1306    0.0854    0.2478    0.0990    0.1522]; 
 elseif strcmp(campaign,'IMPACTS2022')
     % Glass bead calibration results performed during the campaign
     % from 18 to 82°
