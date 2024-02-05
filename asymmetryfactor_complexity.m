@@ -1,10 +1,25 @@
 % scain_s --- scattering intensity distribution ----
 % size_s ---- particle size ----- 
+% instrument ---- PHIPS-HALO or PHIPS-POL ----- 
 %  g ---- asymmetry factor  ---- 
 %  Cp ---- complexity ----- 
 %  C0 ---- integral of geometrical optics phase function ----- 
 
-function [g, Cp, C0] =asymmetryfactor_complexity(scain_s, size_s)
+function [g, Cp, C0] =asymmetryfactor_complexity(scain_s, size_s, instrument)
+
+if nargin < 3
+    instrument = 'PHIPS-HALO';
+    disp('PHIPS-HALO configuration assumed.')
+end
+if strcmp(instrument,'PHIPS-HALO')
+    angs_det = linspace(18,170,20);
+elseif strcmp(instrument,'PHIPS-POL')
+    %angs_det = linspace(6,166,21);
+    angs_det = linspace(14,166,20);
+else
+    disp('Instrument not defined.')
+    return
+end
 
 Nsignals = length(size_s);
 % coefficient for polynomial-fitting of the asymmetry factor; 
@@ -21,7 +36,6 @@ Cp = gm;
 C0 = gm;
 
 for k = 1:Nsignals
-    angs_det = linspace(18,170,20);
     P11_m = scain_s(k,:);
     % Look for NaNs and adjust angles of detection
     ind = isnan(P11_m); P11_m(ind) = []; angs_det(ind) = [];
