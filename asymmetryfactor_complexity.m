@@ -11,15 +11,6 @@ if nargin < 3
     instrument = 'PHIPS-HALO';
     disp('PHIPS-HALO configuration assumed.')
 end
-if strcmp(instrument,'PHIPS-HALO')
-    angs_det = linspace(18,170,20);
-elseif strcmp(instrument,'PHIPS-POL')
-    %angs_det = linspace(6,166,21);
-    angs_det = linspace(14,166,20);
-else
-    disp('Instrument not defined.')
-    return
-end
 
 Nsignals = length(size_s);
 % coefficient for polynomial-fitting of the asymmetry factor; 
@@ -37,6 +28,15 @@ C0 = gm;
 
 for k = 1:Nsignals
     P11_m = scain_s(k,:);
+    if strcmp(instrument,'PHIPS-HALO')
+        angs_det = linspace(18,170,20);
+    elseif strcmp(instrument,'PHIPS-POL')
+        %angs_det = linspace(6,166,21);
+        angs_det = linspace(14,166,20);
+    else
+        disp('Instrument not defined.')
+        return
+    end
     % Look for NaNs and adjust angles of detection
     ind = isnan(P11_m); P11_m(ind) = []; angs_det(ind) = [];
     P11_m = flip(P11_m'); angs_det = flip(angs_det');
