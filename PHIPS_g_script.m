@@ -32,6 +32,12 @@ elseif strcmp(campaign,'IMPACTS2023') % CHANGE THESE!
     disp('Channel correction factors not defined!')
     Cm = [1	1	1	1];
     Cs = [0.029	0.029	0.054	0.021]; 
+elseif strcmp(campaign,'RICE04')
+    % Glass bead calibration results performed before the campaign
+    % from 6° to 166°
+    % updated on 24.04.2024
+    Cm = [2.1295 1.1180 1.0335 0.99084 0.96545 1.0678 1.0438 1.0144 0.7163 1.0501 0.8210 0.8936 0.7488 0.9496 1.1200 1.0230 1.0610 0.9967 1.0909 0.8386 1.5101];
+    Cs = [0.3386 0.1134 0.1140 0.0835 0.1030 0.1294 0.1798 0.1982 0.1218 0.4210 0.1727 0.1952 0.1576 0.2310 0.3060 0.5161 0.4855 0.3875 0.3948 0.2204 0.2886];
 end
 
 
