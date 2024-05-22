@@ -1,5 +1,8 @@
-function [DATA_out] = PHIPS_g_script(PhipsData, Ng, sizelimit, campaign)
+function [DATA_out,scatt_data,legcoefs_m] = PHIPS_g_script(PhipsData, Ng, sizelimit, campaign)
 % Calculates g for a group of particles
+% Output:   DATA_out
+%           scatt_data ->  Average scattering function used for g retrieval
+%           legcoefs_m ->  Legendre coefficients
 % Input:    PhipsData  ->  PHIPS level 5 table, data not corrected
 %           Ng         ->  Number of particles per group
 %           sizelimit  ->  Lower size limit, e.g. 15 micron
@@ -54,9 +57,15 @@ parea_c1c2 = table2array(PhipsData(:,Index_area));
 p_ar_c1c2 = table2array(PhipsData(:,Index_ar));
 AR = min(p_ar_c1c2,[],2,'omitnan'); % smallest AR from the two cameras
 parea = mean(parea_c1c2,2,'omitnan'); 
-T = table2array(PhipsData(:,Index_T)); 
-RH = table2array(PhipsData(:,Index_RH));
-lat = table2array(PhipsData(:,Index_lat));
+if ~isempty(Index_T) % if level 5 data exists
+    T = table2array(PhipsData(:,Index_T)); 
+    RH = table2array(PhipsData(:,Index_RH));
+    lat = table2array(PhipsData(:,Index_lat));
+else
+    T = NaN.*psize_c1c2; 
+    RH = NaN.*psize_c1c2;
+    lat = NaN.*psize_c1c2;
+end
 Tl = length(time_stamp);
 sizeinfo=zeros(Tl,1);
 
@@ -188,18 +197,21 @@ for k = 1:length(Cm)
 end
 
 % Asymmetry factor calculation
-g = []; g_std = []; Cp = []; Cp_std = [];
+g = []; g_std = []; Cp = []; Cp_std = []; scatt_data = []; C0 = []; C0_std = [];
 for k = 1:size(M_group,1)
     temp = repmat(M_group(k,:),[numt 1]);
     gtt = []; Cptt = [];
     for kk = 1:length(Cm)
         temp(:,kk) = M_group(k,kk).*cf(:,kk);
     end
-    [gtt, Cptt, ~] = asymmetryfactor_complexity(temp, repmat(size_group(k),[numt 1]));
+    [gtt, Cptt, C0tt, legcoefs_m] = asymmetryfactor_complexity(temp, repmat(size_group(k),[numt 1]));
     g(k) = mean(gtt,1,"omitnan");
     g_std(k) = nanstd(gtt,0,1);
     Cp(k) = mean(Cptt,1,"omitnan");
     Cp_std(k) = nanstd(Cptt,0,1);
+    C0(k) = mean(C0tt,1,"omitnan");
+    C0_std(k) = nanstd(C0tt,0,1);
+    scatt_data(k,:) = mean(temp,1,"omitnan");
 end
 
 
@@ -208,12 +220,14 @@ DATA_out = table(time_start_group,time_end_group, lat_mean_group, ...
     T_mean_group,T_max_group,T_min_group, ...
     RH_mean_group,RH_max_group,RH_min_group, ...
     AR_mean_group,AR_max_group,AR_min_group, ...
-    size_group,g',g_std', Cp', Cp_std', 'VariableNames',...
+    size_group,g',g_std', Cp', Cp_std', C0', C0_std', ...
+    'VariableNames',...
     {'StartTime','EndTime', 'lat', ...
     'T_mean','T_max','T_min', ...
     'RHi_mean','RHi_max','RHi_min', ...
     'AR_mean','AR_max','AR_min', ...
-    'diameter','g','g_std','Cp','Cp_std'});
+    'diameter','g','g_std','Cp','Cp_std', ...
+    'C0','C0_std'});
 
 % Calculate measured volume
 delta_time = seconds(time_end_group-time_start_group);

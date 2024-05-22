@@ -5,7 +5,7 @@
 %  Cp ---- complexity ----- 
 %  C0 ---- integral of geometrical optics phase function ----- 
 
-function [g, Cp, C0] =asymmetryfactor_complexity(scain_s, size_s, instrument)
+function [g, Cp, C0, legcoefs_m] = asymmetryfactor_complexity(scain_s, size_s, instrument)
 
 if nargin < 3
     instrument = 'PHIPS-HALO';
