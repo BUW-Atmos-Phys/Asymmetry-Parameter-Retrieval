@@ -31,8 +31,12 @@ for k = 1:Nsignals
     if strcmp(instrument,'PHIPS-HALO')
         angs_det = linspace(18,170,20);
     elseif strcmp(instrument,'PHIPS-POL')
-        %angs_det = linspace(6,166,21);
         angs_det = linspace(14,166,20);
+    elseif strcmp(instrument,'PHIPS-POL_6deg')
+        angs_det = linspace(6,166,21);
+    elseif strcmp(instrument,'Macke_RT')
+        angs_det = linspace(0,180,181);
+        angs_det(1) = 0.25;angs_det(end)=179.75;
     else
         disp('Instrument not defined.')
         return
