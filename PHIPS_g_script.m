@@ -73,9 +73,9 @@ else
     lat = NaN.*psize_c1c2;
 end
 Tl = length(time_stamp);
-sizeinfo=zeros(Tl,1);
+sizeinfo = zeros(Tl,1);
 
-% particle size larger than 26 micrometers from two cameras;
+% particle size larger than sizelimit from two cameras;
 for ns = 1:Tl
     p1 = psize_c1c2(ns,1);
     p2 = psize_c1c2(ns,2);
@@ -100,7 +100,7 @@ end
 
 % filtering by size;
 ids = find(sizeinfo);
-Sca_data=ScaIn(ids,:);
+Sca_data = ScaIn(ids,:);
 Time_data = time_stamp(ids,:);
 Size_data = sizeinfo(ids);
 T_data = T(ids);
