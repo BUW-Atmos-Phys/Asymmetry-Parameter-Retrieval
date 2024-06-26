@@ -20,13 +20,15 @@ if strcmp(campaign,'ACLOUD') || strcmp(campaign,'SOCRATES')
 elseif strcmp(campaign,'CIRRUS-HL') 
     % Glass bead calibration results performed during the campaign 
     % 20 micron beads
-    % updated on 12.06.2024
+    % Uses residual method
+    % Laser polarisation 06-94
+    % updated on 26.06.2024
     % from 18 to 90°
     %Cm = [1.0434    0.9651    1.0858    0.8650    1.0681    1.1828    0.8938    1.2364    0.9245    0.9800];
     %Cs = [0.0664    0.0342    0.0740    0.0741    0.0989    0.1339    0.0881    0.2565    0.1004    0.1598]; 
     % from 18 to 66°
-    Cm = [1.0434    0.9651    1.0858    0.8650    1.0681    1.1828    0.8938];
-    Cs = [0.0664    0.0342    0.0740    0.0741    0.0989    0.1339    0.0881]; 
+    Cm = [1.02389362114906  0.95542078466656    1.09661416705148    0.836898469914094   1.18065041305645     1.20093464152644    1.0958908082661];
+    Cs = [0.04634575479128  0.03948404290727    0.07351835071462    0.072570328382189   0.11881132793607     0.15234694581747    0.1159755953066]; 
 elseif strcmp(campaign,'IMPACTS2022')
     % Glass bead calibration results performed during the campaign
     % from 18 to 82°
