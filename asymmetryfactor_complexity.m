@@ -9,7 +9,7 @@ function [g, Cp, C0, legcoefs_m] = asymmetryfactor_complexity(scain_s, size_s, i
 
 if nargin < 3
     instrument = 'PHIPS-HALO';
-    disp('PHIPS-HALO configuration assumed.')
+    %disp('PHIPS-HALO configuration assumed.')
 end
 
 Nsignals = length(size_s);
